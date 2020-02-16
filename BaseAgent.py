@@ -1,17 +1,18 @@
-class BaseAgeny():
+class BaseAgent():
     """
-    Base class for all agents Atomic and High level, learning and planning
+    Base class for all agents Atomic or High level, learning or planning
     """
-    def __init__(self, children):
-        isAtomic = children == None or len(children)
-        self._children = None if isAtomic == True else children
-        self._isAtomic = isAtomic 
+    def __init__(self, policy):
         self._currentActionInProcess = None
-    
-    def _get_action(self):
-        raise NotImplementedError
+        self._policy = policy
 
     def step(self, worldState):
         self._worldState = worldState
-        return action, estimatedTimeLeft
+        self._currentActionInProcess = self._policy.get_action(self._worldState)
+        return self._currentActionInProcess   #, estimatedTimeLeft
+
+
+
+    
+
 
