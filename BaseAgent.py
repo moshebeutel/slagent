@@ -1,4 +1,5 @@
-class BaseAgent():
+
+class BaseAgent(object):
     """
     Base class for all agents Atomic or High level, learning or planning
     """

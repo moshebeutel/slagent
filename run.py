@@ -1,7 +1,8 @@
-import AtomicAgent
-import CompoundAgent
+from CompoundAgent import CompoundAgent as ca
 import policy
 import argparse
+from AtomicAgent import AtomicAgent as aa
+from policy import policy as policy
 
 def build_hierarchy():
     """
@@ -12,9 +13,9 @@ def build_hierarchy():
     p2 = policy
     p3 = policy
 
-    grabStoneAgent = AtomicAgent(p1)
-    moveToAgent = AtomicAgent(p2)
-    grabAndMoveAgent = CompoundAgent(p3, [grabStoneAgent, moveToAgent])
+    grabStoneAgent = aa(p1)
+    moveToAgent = aa(p2)
+    grabAndMoveAgent = ca(p3, [grabStoneAgent, moveToAgent])
     return grabAndMoveAgent
 
 def main():
@@ -26,7 +27,7 @@ def main():
     #                 help='sum the integers (default: find the max)')
 
     args = parser.parse_args()
-    print(args.accumulate(args.integers))
+    # print(args.accumulate(args.integers))
   
     high_level_agent = build_hierarchy()
 
