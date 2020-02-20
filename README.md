@@ -1,5 +1,6 @@
 # slagent
-Software Package implementing the SmartLoader agent
+
+## Software Package implementing the SmartLoader agent
 
 Agent Design
 
