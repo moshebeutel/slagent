@@ -1,6 +1,6 @@
-import BaseAgent
+from BaseAgent import BaseAgent as base_agent
 
-class AtomicAgent(BaseAgent.BaseAgent):
-    def __init__(self, policy):
-        super().__init__(policy)
+
+class AtomicAgent(base_agent):
+    pass
         
