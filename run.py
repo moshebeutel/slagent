@@ -1,9 +1,7 @@
-from CompoundAgent import CompoundAgent
 from RandomPolicy import RandomPolicy
 import argparse
-from AtomicAgent import AtomicAgent
 from Action import Action as action
-from BaseAgent import BaseAgent as base_agent
+from BaseAgent import BaseAgent as Agent
 import World
 
 def build_hierarchy():
@@ -12,15 +10,19 @@ def build_hierarchy():
     """
     world = World.World()
     action_space = [action(name = 'action' + str(i), world=world, average_duration = i / 10.0 , std_duration = 1 / (20.0 * (i + 1)))  for i in range(20)]
-    p1 = RandomPolicy(action_space[:10])
-    p2 = RandomPolicy(action_space[11:20])
-    grabStoneAgent = base_agent(p1)
-    moveToAgent = base_agent(p2)
-    p3 = RandomPolicy([grabStoneAgent, moveToAgent])
-    grabAndMoveAgent = base_agent(p3)
+    grab_stone_policy = RandomPolicy(action_space[:10])
+    navigation_policy = RandomPolicy(action_space[11:20])
+    grabStoneAgent = Agent(grab_stone_policy)
+    moveToAgent = Agent(navigation_policy)
+    high_level_policy = RandomPolicy([grabStoneAgent, moveToAgent])
+    grabAndMoveAgent = Agent(high_level_policy)
     return grabAndMoveAgent
 
 def main_loop(root_agent):
+    '''
+    Run High Level agent in Enviornment untill done
+    '''
+
     done = False
     state = [1,2]
     while(not done):
@@ -30,7 +32,6 @@ def main_loop(root_agent):
 def main():
     high_level_agent = build_hierarchy()
     print(high_level_agent)
-
     main_loop(high_level_agent)
 
 
