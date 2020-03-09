@@ -20,6 +20,7 @@ class BaseAgent(action):
         step_time = 0
         done = False
         while(not step_done and not done):
+       
             self._currentActionInProcess = self._policy.get_action(self._worldState)
             next_state, done, elapsed_time = self.do(worldState)
             step_time += elapsed_time

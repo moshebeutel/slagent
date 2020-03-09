@@ -14,8 +14,20 @@ class policy():
 
     def get_action(self, state):
         idx = -1
-        while idx < 0:
-            idx = _get_action_logic(state)
-            idx = -1 if not self._actions[idx].precondition(state) else idx 
 
+        # backup actions
+        actions_backup = self._actions.copy()
         
+        while idx < 0 and len(self._actions) > 0:
+            idx = self._get_action_logic(state)
+            idx = -1 if not self._actions[idx].precondition(state) else idx 
+            
+            # do not choose the same action again if its preconditions are not met
+            if idx < 0:
+                self._actions.remove(idx)
+        
+        #restore actions
+        if(len(self._actions) != len(actions_backup)):
+            self._actions = actions_backup.copy()
+        
+        return self._actions[idx]

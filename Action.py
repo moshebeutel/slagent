@@ -1,24 +1,30 @@
-import time
-import numpy as np
+
 import World
+import time
+
 
 class Action(object):
-    def __init__(self, name, world, average_duration = 10000, std_duration = 0 ):
+    def __init__(self, name, world,inner_do, args ):
         self._name = name
         self._world = world
-        
+        self._termination = True
+        self.__inner_do_func = inner_do
+        self.__inner_do_params = args
 
     def precondition(self, state): 
         return True
 
-    
     def termination(self, state):
-        raise NotImplementedError
+        return self._termination
     
+    def __inner_do(self):
+        return self.__inner_do_func(self.__inner_do_params)
+
     def do(self, state):
         print ("Start Action  Name {}: {}".format(self._name, time.ctime())) 
-        t = np.random.normal(self._avg_duration, self._std_duration)
-        time.sleep( t )
+        self._termination = False
+        t = self.__inner_do()
+        self._termination = True
         print ("End Action  Name {}: {}".format(self._name, time.ctime())) 
         next_state = state
         done = self._world.is_done(state=next_state)
