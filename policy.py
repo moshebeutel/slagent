@@ -1,5 +1,8 @@
 
 class policy():
+    '''
+    Base class for all policy . The action selection logic of the agent
+    '''
     def __init__(self, action_space):
         assert isinstance(action_space, list) 
         self._actions = action_space
